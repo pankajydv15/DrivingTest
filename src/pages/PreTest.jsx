@@ -158,23 +158,23 @@ const PreTest = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4">
       <h1 className="text-4xl font-bold mb-6">Pre Test</h1>
 
       {!isSubmitted ? (
-        <div className="w-full max-w-md space-y-6">
+        <div className="bg-white text-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl space-y-6">
           <div className="space-y-4">
-            <p className="font-semibold">{questions[currentQuestionIndex].question}</p>
+            <p className="text-xl font-semibold">{questions[currentQuestionIndex].question}</p>
             <div className="space-y-2">
               {questions[currentQuestionIndex].options.map((option, i) => (
-                <label key={i} className="block">
+                <label key={i} className="block cursor-pointer">
                   <input
                     type="radio"
                     name={`question-${currentQuestionIndex}`}
                     value={option}
                     checked={answers[currentQuestionIndex] === option}
                     onChange={() => handleAnswerChange(option)}
-                    className="mr-2"
+                    className="mr-2 accent-indigo-500"
                   />
                   {option}
                 </label>
@@ -186,7 +186,7 @@ const PreTest = () => {
             <button
               onClick={handleNextQuestion}
               disabled={answers[currentQuestionIndex] === null}
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg w-full hover:bg-blue-600 transition disabled:bg-gray-400"
+              className="bg-indigo-500 text-white px-6 py-3 rounded-lg w-full hover:bg-indigo-600 transition disabled:bg-gray-400"
             >
               Next Question
             </button>
@@ -201,7 +201,7 @@ const PreTest = () => {
           )}
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="bg-white text-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md text-center space-y-6">
           <h2 className="text-2xl font-semibold">Your Total Score:</h2>
           <p className="text-4xl font-bold">{score} / {questions.length}</p>
           <button
@@ -215,5 +215,6 @@ const PreTest = () => {
     </div>
   );
 };
+
 
 export default PreTest;
