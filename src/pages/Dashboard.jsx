@@ -30,12 +30,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-600 to-purple-600 p-4 sm:p-8">
-      <h1 className="text-4xl font-bold text-white mb-6 text-center">Welcome to Your Dashboard</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-indigo-600 to-purple-600 p-4 sm:p-8">
+      <h1 className="text-3xl sm:text-4xl font-bold text-white mb-6 text-center">Welcome to Assestment Test</h1>
 
       {!isSubmitted ? (
         <form
-          className="bg-white shadow-xl rounded-lg p-8 w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-6 transform transition duration-500 ease-in-out hover:scale-105"
+          className="bg-white shadow-xl rounded-lg p-6 sm:p-8 w-full max-w-xl grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transform transition duration-500 ease-in-out hover:scale-105"
           onSubmit={handleSubmit}
         >
           <div>
@@ -48,7 +48,7 @@ const Dashboard = () => {
               placeholder="Enter your full name"
               value={formData.name}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
               placeholder="Enter your driving license number"
               value={formData.licenseNumber}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -77,7 +77,7 @@ const Dashboard = () => {
               name="dob"
               value={formData.dob}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -92,21 +92,21 @@ const Dashboard = () => {
               placeholder="Enter your location"
               value={formData.location}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
 
           <div>
             <label className="text-gray-800 font-semibold mb-2 block" htmlFor="expiryDate">
-              License Expiry Date
+              DL Expiry Date
             </label>
             <input
               type="date"
               name="expiryDate"
               value={formData.expiryDate}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -120,7 +120,7 @@ const Dashboard = () => {
               name="issuedDate"
               value={formData.issuedDate}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -135,7 +135,7 @@ const Dashboard = () => {
               placeholder="Enter your mobile number"
               value={formData.mobileNumber}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -150,7 +150,7 @@ const Dashboard = () => {
               placeholder="Enter your traffic ticket number"
               value={formData.ttNumber}
               onChange={handleChange}
-              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              className="border border-gray-300 rounded-lg p-3 sm:p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
               required
             />
           </div>
@@ -164,8 +164,8 @@ const Dashboard = () => {
         </form>
       ) : (
         <div className="text-center text-white space-y-6">
-          <h2 className="text-3xl font-semibold">Select Your Test</h2>
-          <div className="flex flex-col items-center space-y-4">
+          <h2 className="text-2xl sm:text-3xl font-semibold">Select Your Test</h2>
+          <div className="flex flex-col items-center space-y-4 w-full max-w-md">
             <button
               className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-green-600 transition duration-300 transform hover:scale-105"
               onClick={() => navigate("/pre-test")}
