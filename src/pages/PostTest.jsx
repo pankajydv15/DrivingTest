@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const questions = [
     {
@@ -128,80 +129,77 @@ const PostTest = () => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [score, setScore] = useState(0);
   const [testFinished, setTestFinished] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleOptionChange = (option) => {
-    setSelectedAnswer(option);
+      setSelectedAnswer(option);
   };
 
   const handleNextQuestion = () => {
-    if (selectedAnswer === questions[currentQuestionIndex].answer) {
-      setScore(score + 1);
-    }
+      if (selectedAnswer === questions[currentQuestionIndex].answer) {
+          setScore(score + 1);
+      }
 
-    const nextIndex = currentQuestionIndex + 1;
+      const nextIndex = currentQuestionIndex + 1;
 
-    if (nextIndex < questions.length) {
-      setCurrentQuestionIndex(nextIndex);
-      setSelectedAnswer(""); // Reset selected answer for the next question
-    } else {
-      setTestFinished(true);
-    }
+      if (nextIndex < questions.length) {
+          setCurrentQuestionIndex(nextIndex);
+          setSelectedAnswer(""); // Reset selected answer for the next question
+      } else {
+          setTestFinished(true);
+      }
   };
 
-  const handleRestartTest = () => {
-    setCurrentQuestionIndex(0);
-    setSelectedAnswer("");
-    setScore(0);
-    setTestFinished(false);
-  };
+  
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
-      <h1 className="text-2xl font-bold mb-4">Post Test (RTO Driving Test)</h1>
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl space-y-6">
-        {!testFinished ? (
-          <div>
-            <h2 className="text-lg font-medium mb-2">
-              {questions[currentQuestionIndex].id}. {questions[currentQuestionIndex].question}
-            </h2>
-            <div className="space-y-2">
-              {questions[currentQuestionIndex].options.map((option) => (
-                <label key={option} className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name={`question-${questions[currentQuestionIndex].id}`}
-                    value={option}
-                    checked={selectedAnswer === option}
-                    onChange={() => handleOptionChange(option)}
-                    className="form-radio text-blue-500"
-                  />
-                  <span>{option}</span>
-                </label>
-              ))}
-            </div>
-            <div className="mt-4">
-              <button
-                onClick={handleNextQuestion}
-                disabled={!selectedAnswer}  // Disable button if no answer is selected
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600 transition disabled:bg-gray-400"
-              >
-                {currentQuestionIndex + 1 === questions.length ? "Finish Test" : "Next Question"}
-              </button>
-            </div>
+      <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
+          <h1 className="text-2xl font-bold mb-4">Post Test (RTO Driving Test)</h1>
+          <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-3xl space-y-6">
+              {!testFinished ? (
+                  <div>
+                      <h2 className="text-lg font-medium mb-2">
+                          {questions[currentQuestionIndex].id}. {questions[currentQuestionIndex].question}
+                      </h2>
+                      <div className="space-y-2">
+                          {questions[currentQuestionIndex].options.map((option) => (
+                              <label key={option} className="flex items-center space-x-2">
+                                  <input
+                                      type="radio"
+                                      name={`question-${questions[currentQuestionIndex].id}`}
+                                      value={option}
+                                      checked={selectedAnswer === option}
+                                      onChange={() => handleOptionChange(option)}
+                                      className="form-radio text-blue-500"
+                                  />
+                                  <span>{option}</span>
+                              </label>
+                          ))}
+                      </div>
+                      <div className="mt-4">
+                          <button
+                              onClick={handleNextQuestion}
+                              disabled={!selectedAnswer} // Disable button if no answer is selected
+                              className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600 transition disabled:bg-gray-400"
+                          >
+                              {currentQuestionIndex + 1 === questions.length ? "Finish Test" : "Next Question"}
+                          </button>
+                      </div>
+                  </div>
+              ) : (
+                  <div className="text-center">
+                      <h2 className="text-xl font-bold">आपका स्कोर: {score} / {questions.length}</h2>
+                      <button
+                          onClick={() => navigate("/test-selection")}
+                          className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-green-600 transition"
+                      >
+                          Back to Test Selection
+                      </button>
+                     
+                  </div>
+              )}
           </div>
-        ) : (
-          <div className="text-center">
-            <h2 className="text-xl font-bold">आपका स्कोर: {score} / {questions.length}</h2>
-            <button
-              onClick={handleRestartTest}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600 transition"
-            >
-              फिर से टेस्ट करें
-            </button>
-          </div>
-        )}
       </div>
-    </div>
   );
 };
 

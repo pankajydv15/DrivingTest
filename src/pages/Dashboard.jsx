@@ -9,6 +9,7 @@ const Dashboard = () => {
     dob: "",
     location: "",
     expiryDate: "",
+    issuedDate: "",
     mobileNumber: "",
     ttNumber: "",
   });
@@ -29,7 +30,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-600 to-purple-600 p-8">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-600 to-purple-600 p-4 sm:p-8">
       <h1 className="text-4xl font-bold text-white mb-6 text-center">Welcome to Your Dashboard</h1>
 
       {!isSubmitted ? (
@@ -111,6 +112,20 @@ const Dashboard = () => {
           </div>
 
           <div>
+            <label className="text-gray-800 font-semibold mb-2 block" htmlFor="issuedDate">
+              DL Issued Date
+            </label>
+            <input
+              type="date"
+              name="issuedDate"
+              value={formData.issuedDate}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+              required
+            />
+          </div>
+
+          <div>
             <label className="text-gray-800 font-semibold mb-2 block" htmlFor="mobileNumber">
               Mobile Number
             </label>
@@ -142,7 +157,7 @@ const Dashboard = () => {
 
           <button
             type="submit"
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105 col-span-2"
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg w-full hover:bg-indigo-700 transition duration-300 transform hover:scale-105 col-span-1 sm:col-span-2"
           >
             Submit
           </button>
