@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useScores } from "../ScoresContext";
 
 const questions = [
     {
@@ -125,11 +126,17 @@ const questions = [
 ];
 
 const PostTest = () => {
+  const { scores, updateScores } = useScores(); // Use the context hook
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
-  const [score, setScore] = useState(0);
+  const [localScore, setLocalScore] = useState(0); // Local score for this test
   const [testFinished, setTestFinished] = useState(false);
   const navigate = useNavigate();
+
+  // Reset postTestScore when the component is mounted
+  useEffect(() => {
+    setLocalScore(0); // Reset local score
+  }, []);
 
   const handleOptionChange = (option) => {
     setSelectedAnswer(option);
@@ -137,7 +144,7 @@ const PostTest = () => {
 
   const handleNextQuestion = () => {
     if (selectedAnswer === questions[currentQuestionIndex].answer) {
-      setScore(score + 1);
+      setLocalScore(localScore + 1); // Update local score
     }
 
     const nextIndex = currentQuestionIndex + 1;
@@ -146,6 +153,8 @@ const PostTest = () => {
       setCurrentQuestionIndex(nextIndex);
       setSelectedAnswer("");
     } else {
+      // Test finished, update global score
+      updateScores(scores.preTestScore, localScore, scores.colorBlindTestScore); // Use local score
       setTestFinished(true);
     }
   };
@@ -199,7 +208,7 @@ const PostTest = () => {
         ) : (
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              आपका स्कोर: {score} / {questions.length}
+              आपका स्कोर: {localScore} / {questions.length}
             </h2>
             <p className="text-lg text-gray-600 mb-6">
               आपने परीक्षण सफलतापूर्वक पूरा कर लिया है।

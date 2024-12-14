@@ -1,11 +1,12 @@
 // src/pages/PreTest.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useScores } from "../ScoresContext";
 
 const PreTest = () => {
   const navigate = useNavigate();
+  const { scores, updateScores } = useScores();
 
-  // Example questions with answers
   const questions = [
     {
       id: 1,
@@ -155,6 +156,8 @@ const PreTest = () => {
     }, 0);
     setScore(totalScore);
     setIsSubmitted(true);
+
+    updateScores(totalScore, scores.postTestScore, scores.colorBlindTestScore);
   };
 
   return (
@@ -164,7 +167,10 @@ const PreTest = () => {
       {!isSubmitted ? (
         <div className="bg-white text-gray-800 rounded-lg shadow-xl p-6 w-full max-w-2xl space-y-6">
           <div className="space-y-4">
-            <p className="text-xl font-semibold">{questions[currentQuestionIndex].question}</p>
+            <p className="text-xl font-semibold">
+              <span className="font-bold text-indigo-500">Q{currentQuestionIndex + 1}. </span>
+              {questions[currentQuestionIndex].question}
+            </p>
             <div className="space-y-2">
               {questions[currentQuestionIndex].options.map((option, i) => (
                 <label key={i} className="block cursor-pointer">
@@ -215,6 +221,5 @@ const PreTest = () => {
     </div>
   );
 };
-
 
 export default PreTest;

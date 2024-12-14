@@ -7,7 +7,9 @@ import TestSelection from "./pages/TestSelection";
 import PreTest from "./pages/PreTest"; // assuming PreTest component exists
 import PostTest from "./pages/PostTest"; // assuming PostTest component exists
 import ColorBlindTest from "./pages/ColorBlindTest"; // assuming ColorBlindTest component exists
-// import RoadTest from "./pages/RoadTest"; // assuming RoadTest component exists
+import RoadTest from "./pages/RoadTest"; // assuming RoadTest component exists
+import ProgressReport from "./pages/ProgressReport"
+import NewRegistration from "./pages/NewRegistration";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
         <Route path="/pre-test" element={<PreTest />} />
         <Route path="/post-test" element={<PostTest />} />
         <Route path="/color-blind" element={<ColorBlindTest />} />
-        {/* <Route path="/road-test" element={<RoadTest />} /> */}
+        <Route path="/road-test" element={<RoadTest />} />
+        <Route path="/progress-report" element={<ProgressReport />} />
+        <Route path="/new-registration" element={<NewRegistration />} />
       </Routes>
     </Router>
   );

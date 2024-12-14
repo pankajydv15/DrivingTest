@@ -1,40 +1,73 @@
-import { useState, useEffect } from "react";
+import { useScores } from "../ScoresContext";
 import { useNavigate } from "react-router-dom";
 
 const ProgressReport = () => {
   const navigate = useNavigate();
+  const { scores, userDetails } = useScores(); // Get the scores and user details from the context
 
-  // Example state or props for individual test scores (replace with actual data)
-  const [preTestScore, setPreTestScore] = useState(10);  // Example PreTest score (out of 20)
-  const [postTestScore, setPostTestScore] = useState(15); // Example PostTest score (out of 20)
-  const [colorBlindTestScore, setColorBlindTestScore] = useState(12); // Example ColorBlind Test score (out of 20)
+  const {
+    preTestScore = 0,
+    postTestScore = 0,
+    colorBlindTestScore = 0,
+    roadTestScore = 0,
+  } = scores;
+  const {
+    name = "N/A",
+    licenseNumber = "N/A",
+    dob = "N/A",
+    location = "N/A",
+    expiryDate = "N/A",
+    issuedDate = "N/A",
+    mobileNumber = "N/A",
+    ttNumber = "N/A",
+  } = userDetails;
 
   // Calculate total score
-  const totalScore = preTestScore + postTestScore + colorBlindTestScore;
-  
-  // Determine pass or fail
-  const result = totalScore >= 30 ? "Pass" : "Fail";
+  const totalScore = preTestScore + postTestScore + colorBlindTestScore + roadTestScore;
 
-  useEffect(() => {
-    // Here you can replace the state with actual data coming from a backend or props
-  }, []);
+  // Determine pass or fail based on total score
+  const result = totalScore >= 55 ? "Pass" : "Fail";
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-4">
-      <h1 className="text-4xl font-bold mb-6">Progress Report</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4">
+      <h1 className="text-4xl font-bold mb-8 text-gray-800">Progress Report</h1>
 
-      <div className="w-full max-w-md space-y-6">
-        <div className="space-y-4">
-          <p className="font-semibold text-lg">PreTest Score: {preTestScore} / 20</p>
-          <p className="font-semibold text-lg">PostTest Score: {postTestScore} / 20</p>
-          <p className="font-semibold text-lg">ColorBlind Test Score: {colorBlindTestScore} / 20</p>
+      <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 space-y-6">
+        {/* User Details Section */}
+        <div className="border-b pb-6">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">User Details</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>License Number:</strong> {licenseNumber}</p>
+            <p><strong>Date of Birth:</strong> {dob}</p>
+            <p><strong>Location:</strong> {location}</p>
+            <p><strong>DL Issued Date:</strong> {issuedDate}</p>
+            <p><strong>DL Expiry Date:</strong> {expiryDate}</p>
+            <p><strong>Mobile Number:</strong> {mobileNumber}</p>
+            <p><strong>Traffic Ticket Number:</strong> {ttNumber}</p>
+          </div>
         </div>
 
-        <div className="space-y-4">
-          <p className="font-semibold text-2xl">Total Score: {totalScore} / 60</p>
-          <p className="font-semibold text-2xl">Result: <span className={result === "Pass" ? "text-green-500" : "text-red-500"}>{result}</span></p>
+        {/* Scores Section */}
+        <div className="border-b pb-6">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Test Scores</h2>
+          <div className="space-y-2">
+            <p className="text-lg text-gray-600">Pre-Test Score: <strong>{preTestScore} / 20</strong></p>
+            <p className="text-lg text-gray-600">Post-Test Score: <strong>{postTestScore} / 20</strong></p>
+            <p className="text-lg text-gray-600">Color Blind Test Score: <strong>{colorBlindTestScore} / 20</strong></p>
+            <p className="text-lg text-gray-600">Road Test Score: <strong>{roadTestScore} / 20</strong></p>
+          </div>
         </div>
 
+        {/* Total Score and Result Section */}
+        <div className="text-center">
+          <p className="text-xl font-bold text-gray-800">Total Score: <span className="text-blue-600">{totalScore} / 80</span></p>
+          <p className={`text-2xl font-bold mt-4 ${result === "Pass" ? "text-green-500" : "text-red-500"}`}>
+            Result: {result}
+          </p>
+        </div>
+
+        {/* Navigation Button */}
         <button
           onClick={() => navigate("/test-selection")}
           className="bg-blue-500 text-white px-6 py-3 rounded-lg w-full hover:bg-blue-600 transition"

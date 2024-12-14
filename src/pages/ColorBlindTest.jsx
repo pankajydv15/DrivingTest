@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useScores } from "../ScoresContext";
 import pic1 from "../assets/12_1.jpg"; // Sample image 1
 import pic2 from "../assets/15.jpg"; // Sample image 2
 import pic3 from "../assets/16.jpg"; // Sample image 3
@@ -47,6 +48,7 @@ const images = [
 
 const ColorBlindTest = () => {
   const navigate = useNavigate();
+  const { scores, updateScores } = useScores(); // Access the scores and updateScores function
 
   // States to track progress and answers
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -76,6 +78,8 @@ const ColorBlindTest = () => {
     }, 0);
     setScore(totalScore);
     setIsSubmitted(true);
+    
+    updateScores(scores.preTestScore, scores.postTestScore, totalScore);
   };
 
   return (

@@ -9,6 +9,18 @@ export const ScoresProvider = ({ children }) => {
     preTestScore: 0,
     postTestScore: 0,
     colorBlindTestScore: 0,
+    roadTestScore:0,
+  });
+
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    licenseNumber: "",
+    dob: "",
+    location: "",
+    expiryDate: "",
+    issuedDate: "",
+    mobileNumber: "",
+    ttNumber: "",
   });
 
   // Function to update scores
@@ -20,8 +32,13 @@ export const ScoresProvider = ({ children }) => {
     });
   };
 
+  // Function to update user details
+  const updateUserDetails = (details) => {
+    setUserDetails(details);
+  };
+
   return (
-    <ScoresContext.Provider value={{ scores, updateScores }}>
+    <ScoresContext.Provider value={{ scores, updateScores, userDetails, updateUserDetails }}>
       {children}
     </ScoresContext.Provider>
   );

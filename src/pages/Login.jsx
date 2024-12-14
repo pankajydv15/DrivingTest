@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleLogin = () => {
     if (username === "labsim" && password === "12345") {
-      navigate("/dashboard");
+      navigate("/new-registration");
     } else {
       setError("Invalid username or password");
     }
