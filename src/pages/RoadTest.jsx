@@ -176,7 +176,7 @@ const images = [
   
 ];
 
-const ColorBlindTest = () => {
+const RoadTest = () => {
   const navigate = useNavigate();
   const { scores, updateScores } = useScores(); // Access the scores and updateScores function
 
@@ -209,7 +209,7 @@ const ColorBlindTest = () => {
     setScore(totalScore);
     setIsSubmitted(true);
 
-    updateScores(scores.preTestScore, scores.postTestScore, totalScore);
+    updateScores(scores.preTestScore, scores.postTestScore, scores.colorBlindTestScore, totalScore);
   };
 
   return (
@@ -281,4 +281,4 @@ const ColorBlindTest = () => {
   );
 };
 
-export default ColorBlindTest;
+export default RoadTest;

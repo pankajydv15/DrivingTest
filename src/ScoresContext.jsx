@@ -24,11 +24,12 @@ export const ScoresProvider = ({ children }) => {
   });
 
   // Function to update scores
-  const updateScores = (preTest, postTest, colorBlind) => {
+  const updateScores = (preTest, postTest, colorBlind, roadTest) => {
     setScores({
       preTestScore: preTest,
       postTestScore: postTest,
       colorBlindTestScore: colorBlind,
+      roadTestScore:roadTest,
     });
   };
 
