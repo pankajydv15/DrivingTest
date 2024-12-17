@@ -220,10 +220,10 @@ const PreTest = () => {
           <h2 className="text-2xl font-semibold">Your Total Score:</h2>
           <p className="text-4xl font-bold">{score} / {questions.length}</p>
           <button
-            onClick={() => navigate("/test-selection")}
+            onClick={() => navigate("/post-test")}
             className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-green-600 transition"
           >
-            Back to Test Selection
+          Next Test
           </button>
         </div>
       )}

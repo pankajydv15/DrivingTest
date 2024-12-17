@@ -276,10 +276,10 @@ const RoadTest = () => {
             {score} / {images.length}
           </p>
           <button
-            onClick={() => navigate("/test-selection")}
+            onClick={() => navigate("/progress-report")}
             className="bg-green-500 text-white px-6 py-3 rounded-lg w-full hover:bg-green-600 transition"
           >
-            Back to Test Selection
+            Result
           </button>
         </div>
       )}
