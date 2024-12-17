@@ -48,7 +48,7 @@ const images = [
 
 const ColorBlindTest = () => {
   const navigate = useNavigate();
-  const { scores, updateScores } = useScores(); // Access the scores and updateScores function
+  const { scores, updateScores, userId, setScores } = useScores(); // Access the scores and updateScores function
 
   // States to track progress and answers
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -78,8 +78,15 @@ const ColorBlindTest = () => {
     }, 0);
     setScore(totalScore);
     setIsSubmitted(true);
+
+     // Update scores immutably
+    setScores((prevScores) => ({
+      ...prevScores,
+      colorBlindTestScore: totalScore, // Update only the color-blind test score
+    }));
+  
     
-    updateScores(scores.preTestScore, scores.postTestScore, totalScore);
+    updateScores(scores.preTestScore, scores.postTestScore, totalScore, scores.roadTestScore, userId);
   };
 
   return (

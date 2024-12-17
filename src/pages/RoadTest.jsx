@@ -178,7 +178,7 @@ const images = [
 
 const RoadTest = () => {
   const navigate = useNavigate();
-  const { scores, updateScores } = useScores(); // Access the scores and updateScores function
+  const { scores, updateScores, userId, setScores } = useScores(); // Access the scores and updateScores function
 
   // States to track progress and answers
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -208,8 +208,14 @@ const RoadTest = () => {
     }, 0);
     setScore(totalScore);
     setIsSubmitted(true);
+    
+     // Update scores immutably
+    setScores((prevScores) => ({
+      ...prevScores,
+      roadTestScore: totalScore, // Update only the road test score
+    }));
 
-    updateScores(scores.preTestScore, scores.postTestScore, scores.colorBlindTestScore, totalScore);
+    updateScores(scores.preTestScore, scores.postTestScore, scores.colorBlindTestScore, totalScore, userId);
   };
 
   return (
