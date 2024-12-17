@@ -6,7 +6,7 @@ import axios from "axios"; // Import Axios for API calls
 const ScoresContext = createContext();
 
 // Base URL for the backend API
-const API_BASE_URL = "http://localhost:5000/api"; // Update this to your backend URL
+const API_BASE_URL = "https://drivingtestbackend.onrender.com/api"; // Update this to your backend URL
 
 // Create the provider component
 export const ScoresProvider = ({ children }) => {
