@@ -10,6 +10,7 @@ import ColorBlindTest from "./pages/ColorBlindTest"; // assuming ColorBlindTest 
 import RoadTest from "./pages/RoadTest"; // assuming RoadTest component exists
 import ProgressReport from "./pages/ProgressReport"
 import NewRegistration from "./pages/NewRegistration";
+import UserData from "./pages/UserData";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/road-test" element={<RoadTest />} />
         <Route path="/progress-report" element={<ProgressReport />} />
         <Route path="/new-registration" element={<NewRegistration />} />
+        <Route path="/user-Data" element={<UserData />} />
       </Routes>
     </Router>
   );

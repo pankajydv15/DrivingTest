@@ -79,47 +79,80 @@ const ProgressReport = () => {
     doc.setFontSize(16);
     doc.text("Progress Report", 105, 15, null, null, "center");
 
-    // User Details
+    // User Details - 4 fields left, 4 fields right
     doc.setFontSize(12);
-    doc.text(`Name: ${name}`, 10, 30);
-    doc.text(`License Number: ${licenseNumber}`, 10, 40);
-    doc.text(`Date of Birth: ${dob}`, 10, 50);
-    doc.text(`Location: ${location}`, 10, 60);
-    doc.text(`DL Issued Date: ${issuedDate}`, 10, 70);
-    doc.text(`DL Expiry Date: ${expiryDate}`, 10, 80);
-    doc.text(`Mobile Number: ${mobileNumber}`, 10, 90);
-    doc.text(`Traffic Ticket Number: ${ttNumber}`, 10, 100);
+    const leftStartX = 10;
+    const rightStartX = 105;
+    let startY = 30;
+
+    const leftFields = [
+      `Name: ${name}`,
+      `License Number: ${licenseNumber}`,
+      `Date of Birth: ${dob}`,
+      `Location: ${location}`,
+    ];
+
+    const rightFields = [
+      `DL Issued Date: ${issuedDate}`,
+      `DL Expiry Date: ${expiryDate}`,
+      `Mobile Number: ${mobileNumber}`,
+      `Traffic Ticket Number: ${ttNumber}`,
+    ];
+
+    // Draw Left Fields
+    leftFields.forEach((field, index) => {
+      doc.text(field, leftStartX, startY + index * 10);
+    });
+
+    // Draw Right Fields
+    rightFields.forEach((field, index) => {
+      doc.text(field, rightStartX, startY + index * 10);
+    });
 
     // Test Scores
-    doc.text(`Pre-Test Score: ${preTestScore} / 20`, 10, 120);
-    doc.text(`Post-Test Score: ${postTestScore} / 20`, 10, 130);
-    doc.text(`Color Blind Test Score: ${colorBlindTestScore} / 20`, 10, 140);
-    doc.text(`Road Test Score: ${roadTestScore} / 20`, 10, 150);
+    startY += 50; // Move below user details
+    doc.setFontSize(14);
+    doc.text("Test Scores", leftStartX, startY);
+
+    doc.setFontSize(12);
+    const scores = [
+      `Pre-Test Score: ${preTestScore} / 20`,
+      `Post-Test Score: ${postTestScore} / 20`,
+      `Color Blind Test Score: ${colorBlindTestScore} / 20`,
+      `Road Test Score: ${roadTestScore} / 20`,
+    ];
+
+    scores.forEach((score, index) => {
+      doc.text(score, leftStartX, startY + 10 + index * 10);
+    });
 
     // Total Score and Result
+    startY += 60;
     doc.setFontSize(14);
-    doc.text(`Total Score: ${totalScore} / 80`, 10, 170);
-    doc.text(`Result: ${result}`, 10, 180);
+    doc.text(`Total Score: ${totalScore} / 80`, leftStartX, startY);
+    doc.setFontSize(16);
+    doc.setTextColor(result === "Pass" ? "green" : "red");
+    doc.text(`Result: ${result}`, leftStartX, startY + 10);
+    doc.setTextColor("black");
 
-    // Add Photo (if available)
+    // Add Photos Horizontally
+    startY += 20; // Space before photos
+    const imgWidth = 50;
+    const imgHeight = 50;
+
     if (photo && photo !== "N/A") {
-      const imgWidth = 50;
-      const imgHeight = 50;
-      doc.addImage(photo, "JPEG", 150, 30, imgWidth, imgHeight); // Position photo at (150, 30)
+      doc.addImage(photo, "JPEG", leftStartX, startY, imgWidth, imgHeight);
+      doc.text("User Photo", leftStartX + 12, startY + 55, null, null, "center");
     }
 
-    // Add DL Front Photo (if available)
     if (dlFrontPhoto && dlFrontPhoto !== "N/A") {
-      const imgWidth = 50;
-      const imgHeight = 50;
-      doc.addImage(dlFrontPhoto, "JPEG", 150, 90, imgWidth, imgHeight); // Position DL front photo
+      doc.addImage(dlFrontPhoto, "JPEG", leftStartX + 60, startY, imgWidth, imgHeight);
+      doc.text("DL Front", leftStartX + 72, startY + 55, null, null, "center");
     }
 
-    // Add DL Back Photo (if available)
     if (dlBackPhoto && dlBackPhoto !== "N/A") {
-      const imgWidth = 50;
-      const imgHeight = 50;
-      doc.addImage(dlBackPhoto, "JPEG", 150, 150, imgWidth, imgHeight); // Position DL back photo
+      doc.addImage(dlBackPhoto, "JPEG", leftStartX + 120, startY, imgWidth, imgHeight);
+      doc.text("DL Back", leftStartX + 132, startY + 55, null, null, "center");
     }
 
     // Save the PDF
@@ -127,16 +160,16 @@ const ProgressReport = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-gray-800">Progress Report</h1>
 
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 space-y-6">
+      <div className="w-full max-w-3xl bg-white shadow-xl rounded-lg p-8 space-y-6">
         {/* User Details Section */}
         <div className="border-b pb-6">
           <h2 className="text-2xl font-semibold text-gray-700 mb-4">
             User Details
           </h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <p><strong>Name:</strong> {name}</p>
             <p><strong>License Number:</strong> {licenseNumber}</p>
             <p><strong>Date of Birth:</strong> {dob}</p>
@@ -222,7 +255,7 @@ const ProgressReport = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex space-x-4">
+        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
           <button
             onClick={() => navigate("/new-registration")}
             className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
