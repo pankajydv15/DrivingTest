@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import * as XLSX from "xlsx";
 
 // const API_BASE_URL = "http://localhost:5000/api"; // Update this with your backend URL
-const API_BASE_URL = "https://drivingtestbackend.onrender.com/api"; // Update this to your backend URL
-
+const API_BASE_URL = "https://drivingtestbackend.onrender.com/api"; 
 
 const UserDetails = () => {
   const [users, setUsers] = useState([]);
@@ -40,6 +40,29 @@ const UserDetails = () => {
     setIsModalOpen(false); // Close the modal
   };
 
+  const downloadReport = () => {
+    const data = users.map((user) => ({
+      Name: user.name || "N/A",
+      "License Number": user.licenseNumber || "N/A",
+      "Date of Birth": user.dob || "N/A",
+      Location: user.location || "N/A",
+      "Expiry Date": user.expiryDate || "N/A",
+      "Issued Date": user.issuedDate || "N/A",
+      "Mobile Number": user.mobileNumber || "N/A",
+      "TT Number": user.ttNumber || "N/A",
+      "Pre-Test Score": user.scores?.preTestScore || "N/A",
+      "Post-Test Score": user.scores?.postTestScore || "N/A",
+      "Colorblind Test Score": user.scores?.colorBlindTestScore || "N/A",
+      "Road Test Score": user.scores?.roadTestScore || "N/A",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users Report");
+
+    XLSX.writeFile(workbook, "Users_Report.xlsx");
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -47,6 +70,16 @@ const UserDetails = () => {
   return (
     <div className="p-6">
       <h2 className="text-3xl font-semibold mb-6 text-center">Test Details</h2>
+
+      {/* Download Report Button */}
+      <div className="mb-4 text-center">
+        <button
+          className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition duration-300"
+          onClick={downloadReport}
+        >
+          Download Report
+        </button>
+      </div>
 
       {/* User list display */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -86,9 +119,10 @@ const UserDetails = () => {
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg w-11/12 max-w-4xl overflow-y-auto h-3/4 shadow-lg">
             <h3 className="text-2xl font-bold mb-4 text-center">User Details</h3>
+            {/* Table showing user details */}
             <table className="min-w-full border-collapse border border-gray-300">
               <tbody>
-                <tr>
+              <tr>
                   <td className="border border-gray-300 px-4 py-2 font-semibold">Name:</td>
                   <td className="border border-gray-300 px-4 py-2">{selectedUser.name || "N/A"}</td>
                 </tr>

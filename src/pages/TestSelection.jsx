@@ -46,12 +46,12 @@ const TestSelection = () => {
       </div>
 
       {/* Progress Report Button */}
-      <button
+      {/* <button
         className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-2xl text-lg font-bold shadow-lg hover:from-purple-600 hover:to-pink-600 transition duration-300 transform hover:scale-105 hover:shadow-xl mb-6"
         onClick={() => navigate("/progress-report")}
       >
         View Progress Report 📊
-      </button>
+      </button> */}
 
       {/* New Registration Button */}
       <button

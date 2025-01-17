@@ -11,6 +11,7 @@ import RoadTest from "./pages/RoadTest"; // assuming RoadTest component exists
 import ProgressReport from "./pages/ProgressReport"
 import NewRegistration from "./pages/NewRegistration";
 import UserData from "./pages/UserData";
+import Data from "./pages/Data";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/progress-report" element={<ProgressReport />} />
         <Route path="/new-registration" element={<NewRegistration />} />
         <Route path="/user-Data" element={<UserData />} />
+        <Route path="/data" element={<Data />} />
       </Routes>
     </Router>
   );
