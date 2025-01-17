@@ -61,7 +61,7 @@ const ProgressReport = () => {
         result,
       };
 
-      await axios.post("http://localhost:5000/api/progress-report", reportData);
+      await axios.post("https://drivingtestbackend.onrender.com/api/progress-report", reportData);
     } catch (error) {
       console.error("Error saving progress report:", error);
     }
