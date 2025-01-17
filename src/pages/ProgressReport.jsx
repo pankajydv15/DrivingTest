@@ -1,5 +1,6 @@
 import { useScores } from "../ScoresContext";
 import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -7,6 +8,7 @@ import jsPDF from "jspdf";
 const ProgressReport = () => {
   const navigate = useNavigate();
   const { scores, userDetails } = useScores();
+  const [isReportSaved, setIsReportSaved] = useState(false);
 
   const {
     preTestScore = 0,
@@ -36,6 +38,7 @@ const ProgressReport = () => {
 
   // Save Progress Report
   const saveProgressReport = async () => {
+    if (isReportSaved) return;
     try {
       const reportData = {
         scores: {
@@ -62,6 +65,7 @@ const ProgressReport = () => {
       };
 
       await axios.post("https://drivingtestbackend.onrender.com/api/progress-report", reportData);
+      setIsReportSaved(true); // Set the flag to true after saving
     } catch (error) {
       console.error("Error saving progress report:", error);
     }
