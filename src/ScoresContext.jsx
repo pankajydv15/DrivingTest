@@ -109,6 +109,7 @@ export const ScoresProvider = ({ children }) => {
         colorBlindTestScore: colorBlind,
         roadTestScore: roadTest,
 });
+      console.log("Sending userId to backend:", user_id);
       const response = await axios.post(`${API_BASE_URL}/users/scores/save`, {
         userId: user_id,
         preTestScore: preTest,
