@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
+import logo from "../assets/logo.jpeg"
 
 const ProgressReport = () => {
   const navigate = useNavigate();
@@ -78,90 +79,115 @@ const ProgressReport = () => {
   // Generate PDF Report
   const downloadPDF = () => {
     const doc = new jsPDF();
-
+  
+    // Constants for spacing and layout
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 15;
+    const sectionSpacing = 10;
+    const fieldSpacing = 8;
+  
+    // Add Logo at the top center
+    const imgWidth = 60; // Logo width
+    const imgHeight = 40; // Logo height
+    const logoX = (pageWidth - imgWidth) / 2; // Center align horizontally
+    const logoY = margin;
+  
+    doc.addImage(logo, "JPEG", logoX, logoY, imgWidth, imgHeight);
+  
     // Report Title
-    doc.setFontSize(16);
-    doc.text("Progress Report", 105, 15, null, null, "center");
-
-    // User Details - 4 fields left, 4 fields right
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    const titleY = logoY + imgHeight + 10;
+    doc.text("Progress Report", pageWidth / 2, titleY, null, null, "center");
+  
+    // User Details - Two Columns Layout
     doc.setFontSize(12);
-    const leftStartX = 10;
-    const rightStartX = 105;
-    let startY = 30;
-
+    doc.setFont("helvetica", "normal");
+    const leftStartX = margin;
+    const rightStartX = pageWidth / 2 + 10;
+    let startY = titleY + sectionSpacing;
+  
     const leftFields = [
       `Name: ${name}`,
       `License Number: ${licenseNumber}`,
       `Date of Birth: ${dob}`,
       `Location: ${location}`,
     ];
-
+  
     const rightFields = [
       `DL Issued Date: ${issuedDate}`,
       `DL Expiry Date: ${expiryDate}`,
       `Mobile Number: ${mobileNumber}`,
       `Traffic Ticket Number: ${ttNumber}`,
     ];
-
+  
     // Draw Left Fields
     leftFields.forEach((field, index) => {
-      doc.text(field, leftStartX, startY + index * 10);
+      doc.text(field, leftStartX, startY + index * fieldSpacing);
     });
-
+  
     // Draw Right Fields
     rightFields.forEach((field, index) => {
-      doc.text(field, rightStartX, startY + index * 10);
+      doc.text(field, rightStartX, startY + index * fieldSpacing);
     });
-
-    // Test Scores
-    startY += 50; // Move below user details
+  
+    // Test Scores Section
+    startY += leftFields.length * fieldSpacing + sectionSpacing;
     doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
     doc.text("Test Scores", leftStartX, startY);
-
+  
     doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
     const scores = [
       `Pre-Test Score: ${preTestScore} / 20`,
       `Post-Test Score: ${postTestScore} / 20`,
       `Color Blind Test Score: ${colorBlindTestScore} / 20`,
       `Road Test Score: ${roadTestScore} / 20`,
     ];
-
+  
     scores.forEach((score, index) => {
-      doc.text(score, leftStartX, startY + 10 + index * 10);
+      doc.text(score, leftStartX, startY + sectionSpacing + index * fieldSpacing);
     });
-
-    // Total Score and Result
-    startY += 60;
+  
+    // Total Score and Result Section
+    startY += scores.length * fieldSpacing + sectionSpacing * 2;
     doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
     doc.text(`Total Score: ${totalScore} / 80`, leftStartX, startY);
+  
     doc.setFontSize(16);
     doc.setTextColor(result === "Pass" ? "green" : "red");
-    doc.text(`Result: ${result}`, leftStartX, startY + 10);
+    doc.text(`Result: ${result}`, leftStartX, startY + fieldSpacing);
     doc.setTextColor("black");
-
-    // Add Photos Horizontally
-    startY += 20; // Space before photos
-    const imgWidth = 50;
-    const imgHeight = 50;
-
+  
+    // Add Photos Section
+    startY += sectionSpacing * 2;
+    const photoWidth = 40;
+    const photoHeight = 40;
+  
     if (photo && photo !== "N/A") {
-      doc.addImage(photo, "JPEG", leftStartX, startY, imgWidth, imgHeight);
-      doc.text("User Photo", leftStartX + 12, startY + 55, null, null, "center");
+      doc.addImage(photo, "JPEG", leftStartX, startY, photoWidth, photoHeight);
+      doc.text("User Photo", leftStartX + photoWidth / 2, startY + photoHeight + 5, null, null, "center");
     }
-
+  
     if (dlFrontPhoto && dlFrontPhoto !== "N/A") {
-      doc.addImage(dlFrontPhoto, "JPEG", leftStartX + 60, startY, imgWidth, imgHeight);
-      doc.text("DL Front", leftStartX + 72, startY + 55, null, null, "center");
+      const dlFrontX = leftStartX + photoWidth + 20;
+      doc.addImage(dlFrontPhoto, "JPEG", dlFrontX, startY, photoWidth, photoHeight);
+      doc.text("DL Front", dlFrontX + photoWidth / 2, startY + photoHeight + 5, null, null, "center");
     }
-
+  
     if (dlBackPhoto && dlBackPhoto !== "N/A") {
-      doc.addImage(dlBackPhoto, "JPEG", leftStartX + 120, startY, imgWidth, imgHeight);
-      doc.text("DL Back", leftStartX + 132, startY + 55, null, null, "center");
+      const dlBackX = leftStartX + 2 * (photoWidth + 20);
+      doc.addImage(dlBackPhoto, "JPEG", dlBackX, startY, photoWidth, photoHeight);
+      doc.text("DL Back", dlBackX + photoWidth / 2, startY + photoHeight + 5, null, null, "center");
     }
-
+  
     // Save the PDF
     doc.save("progress-report.pdf");
   };
+  
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-gray-200 px-4 py-8">

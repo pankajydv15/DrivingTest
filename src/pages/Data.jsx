@@ -161,6 +161,18 @@ const ProgressReportList = () => {
               <strong>Location:</strong> {selectedReport.userDetails.location}
             </p>
             <p>
+              <strong>Mobile Number:</strong> {selectedReport.userDetails.mobileNumber}
+            </p>
+            <p>
+              <strong>Expiry Data:</strong> {selectedReport.userDetails.expiryDate}
+            </p>
+            <p>
+              <strong>issued Date:</strong> {selectedReport.userDetails.issuedDate}
+            </p>
+            <p>
+              <strong>TT Number:</strong> {selectedReport.userDetails.ttNumber}
+            </p>
+            <p>
               <strong>Result:</strong> {selectedReport.result}
             </p>
             <button
