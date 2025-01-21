@@ -32,12 +32,12 @@ function NewRegistration() {
           </button>
 
           {/* Progress Report Link */}
-          <button
+          {/* <button
             onClick={() => navigate('/user-Data')}
             className="w-full px-6 py-3 bg-purple-500 text-white rounded-lg font-semibold hover:bg-purple-600 transition"
           >
           User Data
-          </button>
+          </button> */}
 
           <button
             onClick={() => navigate('/data')}

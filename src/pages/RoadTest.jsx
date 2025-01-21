@@ -16,12 +16,12 @@ import pic12 from "../assets/pic12.png"; // Sample image 3
 import pic13 from "../assets/pic13.jpg"; // Sample image 3
 import pic14 from "../assets/pic14.png"; // Sample image 3
 import pic15 from "../assets/pic141.png"; // Sample image 3
-// import pic15 from "../assets/7"; // Sample image 3
-// import pic16 from "../asset"; // Sample image 3
-// import pic17 from "../assets/"; // Sample image 3
-// import pic18 from "../assets/8"; // Sample image 3
-// import pic19 from "../assets/t"; // Sample image 3
-// import pic20 from "../assets"; // Sample image 3
+import pic16 from "../assets/pic21.png"; // Sample image 3
+import pic17 from "../assets/pic17.jpg"; // Sample image 3
+import pic18 from "../assets/pic18.jpg"; // Sample image 3
+import pic19 from "../assets/pic19.png"; // Sample image 3
+import pic20 from "../assets/pic20.png"; // Sample image 3
+import pic21 from "../assets/pic16.webp"; // Sample image 3
 
 // Define the 3 color-blind test images and their corresponding correct answers along with options
 const images = [
@@ -61,7 +61,7 @@ const images = [
     src: pic5,
     question: "उपरोक्त सड़क चिन्ह का क्या तात्पर्य है?",
     options: ["आगे बड़ी सड़क है।", "टी चौराहा।", "बंद गली।"],
-    correctAnswer: "टी चौराहा।",
+    correctAnswer: "बंद गली।",
   },
   {
     id: 5,
@@ -113,7 +113,7 @@ const images = [
       "आगे खड़ी चट्टान है।",
       "नीचे गिरने का खतरा।",
     ],
-    correctAnswer: "नीचे गिरने का खतरा।",
+    correctAnswer: "आगे खड़ी चट्टान है।",
   },
   {
     id: 10,
@@ -157,7 +157,7 @@ const images = [
       "पदयात्री निषिद्ध।",
       "पैदल यात्रियों का ध्यान रखें।",
     ],
-    correctAnswer: "पैदल पार पथ।",
+    correctAnswer: "पदयात्री निषिद्ध।",
   },
   {
     id: 14,
@@ -170,6 +170,75 @@ const images = [
       "उल्टा मोड़ (यू-टर्न) लें।",
     ],
     correctAnswer: "उल्टा मोड़ (यू-टर्न) लेना निषिद्ध है।",
+  },
+  {
+    id: 15,
+    src: pic21,
+    question: "उपरोक्त सड़क चिन्ह का क्या अर्थ है?",
+    options: [
+      "पैदल पार पथ।",
+      "पदयात्री निषिद्ध।",
+      "पैदल यात्रियों का ध्यान रखें।",
+    ],
+    correctAnswer: "पदयात्री निषिद्ध।",
+  },
+  {
+    id: 16,
+    src: pic16,
+    question: "उपरोक्त सड़क चिन्ह का क्या अर्थ है?",
+    options: [
+      "वाहन की अधिकतम ऊँचाई 3.8 मीटर होनी चाहिए।",
+      "वाहन की अधिकतम ऊँचाई 3.8 मीटर से अधिक नहीं होनी चाहिए।",
+      " वाहन की न्यूनतम ऊँचाई 3.8 मीटर होनी चाहिए।",
+    ],
+    correctAnswer: " वाहन की अधिकतम ऊँचाई 3.8 मीटर से अधिक नहीं होनी चाहिए।",
+  },
+  {
+    id: 17,
+    src: pic17,
+    question: "उपरोक्त सड़क चिन्ह का क्या अर्थ है?",
+    options: [
+     " वाहन की अधिकतम चौड़ाई।",
+     " वाहन की अधिकतम ऊँचाई।",
+      "वाहन की अधिकतम लंबाई।",
+     " वाहन की अधिकतम गति।,"
+    ],
+    correctAnswer: "वाहन की अधिकतम ऊँचाई।",
+  },
+  {
+    id: 18,
+    src: pic18,
+    question: "उपरोक्त सड़क चिन्ह का क्या अर्थ है?",
+    options: [
+      "50 की सीमा।",
+      "50 पदयात्री निषिद्ध।",
+      "खड़ी चढ़ाई।",
+    ],
+    correctAnswer: "50 की सीमा।",
+  },
+  {
+    id: 19,
+    src: pic19,
+    question: "उपरोक्त सड़क चिन्ह का क्या अर्थ है?",
+    options: [
+      "5 टन से अधिक वजन का वाहन प्रवेश वर्जित।",
+      "5 मीटर से अधिक ऊंचा वाहन प्रवेश वर्जित।",
+      "5 किलोमीटर प्रति घंटे की गति से चलें।",
+      "5 मीटर चौड़ा वाहन ही प्रवेश कर सकता है।",
+    ],
+    correctAnswer: "5 टन से अधिक वजन का वाहन प्रवेश वर्जित।",
+  },
+  {
+    id: 20,
+    src: pic20,
+    question: "उपरोक्त सड़क चिन्ह का क्या अर्थ है?",
+    options: [
+      "आगे क्रॉसिंग है।",
+      " आगे खतरनाक मोड़ है।",
+      "आगे पुल है।",
+      "आगे अवरोध है।",
+    ],
+    correctAnswer: "आगे अवरोध है।",
   },
 
 
