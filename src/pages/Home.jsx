@@ -57,7 +57,7 @@ const Home = () => {
         </p>
         <button
           onClick={handleStartTest}
-          className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-4 rounded-full shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
+          className=" cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-4 rounded-full shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
         >
           Start Your Test
         </button>

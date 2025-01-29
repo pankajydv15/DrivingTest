@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 const ProgressReportList = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedReport, setSelectedReport] = useState(null); // For modal
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
+  const [selectedReport, setSelectedReport] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axios.get('https://drivingtestbackend.onrender.com/api/progress-reports');
+        const response = await axios.get(
+          "https://drivingtestbackend.onrender.com/api/progress-reports"
+        );
         setReports(response.data.data);
       } catch (error) {
         console.error("Error fetching reports:", error);
@@ -24,39 +26,59 @@ const ProgressReportList = () => {
     fetchReports();
   }, []);
 
+  const deleteReport = async (id) => {
+    try {
+      const response = await axios.delete(
+        "https://drivingtestbackend.onrender.com/api/progress-reports/delete",
+        {
+          data: { reportIds: [id] },
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.data.success) {
+        alert("Report deleted successfully!");
+        setReports((prev) => prev.filter((report) => report._id !== id));
+      }
+    } catch (error) {
+      console.error("Error deleting report:", error);
+      alert("Failed to delete report.");
+    }
+  };
+
   const downloadReport = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Progress Reports');
+    const worksheet = workbook.addWorksheet("Progress Reports");
 
     const header = [
-      'Name',
-      'License Number',
-      'Date of Birth',
-      'Location',
-      'Issued Date',
-      'Expiry Date',
-      'Mobile Number',
-      'TT Number',
-      'Pre-Test Score',
-      'Post-Test Score',
-      'Color Blind Test Score',
-      'Road Test Score',
-      'Total Score',
-      'Result',
+      "Name",
+      "License Number",
+      "Date of Birth",
+      "Location",
+      "Issued Date",
+      "Expiry Date",
+      "Mobile Number",
+      "TT Number",
+      "Pre-Test Score",
+      "Post-Test Score",
+      "Color Blind Test Score",
+      "Road Test Score",
+      "Total Score",
+      "Result",
     ];
     worksheet.addRow(header);
 
     worksheet.getRow(1).eachCell((cell) => {
-      cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
       cell.fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'FF4F81BD' },
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FF4F81BD" },
       };
-      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      cell.alignment = { horizontal: "center", vertical: "middle" };
     });
 
     reports.forEach((report) => {
+      // console.log("Report Result:", report.result);
       const row = worksheet.addRow([
         report.userDetails.name,
         report.userDetails.licenseNumber,
@@ -71,35 +93,22 @@ const ProgressReportList = () => {
         report.scores.colorBlindTestScore,
         report.scores.roadTestScore,
         report.totalScore,
-        report.result === 'Passed' ? 'Pass' : 'Fail',
+        report.result,
       ]);
-
       row.getCell(1).font = { bold: true };
-      const resultCell = row.getCell(14);
-      resultCell.font = {
-        color: { argb: report.result === 'Passed' ? 'FF008000' : 'FFFF0000' },
+      row.getCell(14).font = {
+        color: { argb: report.result === "Pass" ? "FF008000" : "FFFF0000" },
       };
-      resultCell.alignment = { horizontal: 'center', vertical: 'middle' };
     });
 
-    worksheet.columns.forEach((column) => {
-      column.width = 20;
-    });
-
+    worksheet.columns.forEach((column) => (column.width = 20));
     const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-    saveAs(blob, 'Progress_Reports.xlsx');
-  };
-
-  const openModal = (report) => {
-    setSelectedReport(report);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setSelectedReport(null);
-    setIsModalOpen(false);
+    saveAs(
+      new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      }),
+      "Progress_Reports.xlsx"
+    );
   };
 
   if (loading) {
@@ -117,7 +126,7 @@ const ProgressReportList = () => {
           <h1 className="text-3xl font-bold text-gray-800">Progress Reports</h1>
           <button
             onClick={downloadReport}
-            className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md"
           >
             Download Report
           </button>
@@ -129,30 +138,50 @@ const ProgressReportList = () => {
             {reports.map((report) => (
               <div
                 key={report._id}
-                className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow border border-gray-200"
-                onClick={() => openModal(report)}
+                className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
               >
                 <div className="p-4">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{report.userDetails.name}</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    {report.userDetails.name}
+                  </h3>
                   <p className="text-gray-600 mb-1">
-                    <span className="font-medium">License Number:</span> {report.userDetails.licenseNumber}
+                    <span className="font-medium">License Number:</span>{" "}
+                    {report.userDetails.licenseNumber}
                   </p>
                   <p className="text-gray-600">
                     <span className="font-medium">Result:</span> {report.result}
                   </p>
+                </div>
+                <div className="flex justify-between p-4">
+                  <button
+                    onClick={() =>
+                      setSelectedReport(report) || setIsModalOpen(true)
+                    }
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    View
+                  </button>
+                  <button
+                    onClick={() => deleteReport(report._id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-
       {isModalOpen && selectedReport && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 max-w-lg w-full">
-            <h2 className="text-2xl font-bold mb-4">{selectedReport.userDetails.name}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {selectedReport.userDetails.name}
+            </h2>
             <p>
-              <strong>License Number:</strong> {selectedReport.userDetails.licenseNumber}
+              <strong>License Number:</strong>{" "}
+              {selectedReport.userDetails.licenseNumber}
             </p>
             <p>
               <strong>Date of Birth:</strong> {selectedReport.userDetails.dob}
@@ -161,13 +190,16 @@ const ProgressReportList = () => {
               <strong>Location:</strong> {selectedReport.userDetails.location}
             </p>
             <p>
-              <strong>Mobile Number:</strong> {selectedReport.userDetails.mobileNumber}
+              <strong>Mobile Number:</strong>{" "}
+              {selectedReport.userDetails.mobileNumber}
             </p>
             <p>
-              <strong>Expiry Data:</strong> {selectedReport.userDetails.expiryDate}
+              <strong>Expiry Date:</strong>{" "}
+              {selectedReport.userDetails.expiryDate}
             </p>
             <p>
-              <strong>issued Date:</strong> {selectedReport.userDetails.issuedDate}
+              <strong>Issued Date:</strong>{" "}
+              {selectedReport.userDetails.issuedDate}
             </p>
             <p>
               <strong>TT Number:</strong> {selectedReport.userDetails.ttNumber}
@@ -176,8 +208,8 @@ const ProgressReportList = () => {
               <strong>Result:</strong> {selectedReport.result}
             </p>
             <button
-              onClick={closeModal}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              onClick={() => setIsModalOpen(false)}
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
             >
               Close
             </button>
